@@ -24,7 +24,7 @@ func (e *{{title .Alias}}) Stream(ctx context.Context, req *pb.StreamRequest, st
 		if err := stream.Send(&pb.StreamResponse{
 			Count: int64(i),
 		}); err != nil {
-			return nil
+			return err
 		}
 	}
 	return nil
