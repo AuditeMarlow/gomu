@@ -6,10 +6,10 @@ Gomu is a helper tool for developing [Go Micro][1] projects.
 
 [Download][2] and install **Go**. Version `1.16` or higher is required
 
-Installation is done by using the [`go install`][3] command.
+Installation is done by using the `go get` command.
 
 ```sh
-go install github.com/auditemarlow/gomu
+go get github.com/auditemarlow/gomu
 ```
 
 Let's create a new project using the `new` command.
@@ -36,4 +36,3 @@ for more info on developing services.
 
 [1]: https://github.com/asim/go-micro
 [2]: https://golang.org/dl/
-[3]: https://golang.org/cmd/go/#hdr-Compile_and_install_packages_and_dependencies
