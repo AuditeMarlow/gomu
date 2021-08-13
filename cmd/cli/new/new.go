@@ -33,7 +33,7 @@ func protoComments(alias string) []string {
 		"go get github.com/asim/go-micro/cmd/protoc-gen-micro/v3",
 		"\ncompile the proto file " + alias + ".proto:\n",
 		"cd " + alias,
-		"make proto\n",
+		"make tidy proto\n",
 	}
 }
 
