@@ -11,7 +11,7 @@ import (
 	pb "{{.Dir}}/proto"
 )
 
-type {{title .Alias}} struct {}
+type {{title .Alias}} struct{}
 
 func (e *{{title .Alias}}) Call(ctx context.Context, req *pb.Request, rsp *pb.Response) error {
 	log.Infof("Received {{title .Alias}}.Call request: %v", req)
