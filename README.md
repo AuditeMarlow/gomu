@@ -40,5 +40,10 @@ gomu stream helloworld Helloworld.Stream '{"count": 10}'
 That's all you need to know to start. Refer to the [Go Micro][1] documentation
 for more info on developing services.
 
+## License
+
+This software is published under the [MIT license][3].
+
 [1]: https://github.com/asim/go-micro
 [2]: https://golang.org/dl/
+[3]: LICENSE
