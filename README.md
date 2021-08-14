@@ -31,6 +31,12 @@ Finally we can call the service.
 gomu call helloworld Helloworld.Call '{"name": "John"}'
 ```
 
+We can also stream server responses.
+
+```sh
+gomu stream helloworld Helloworld.Stream '{"count": 10}'
+```
+
 That's all you need to know to start. Refer to the [Go Micro][1] documentation
 for more info on developing services.
 
