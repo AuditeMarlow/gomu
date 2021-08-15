@@ -39,47 +39,26 @@ func protoComments(alias string) []string {
 
 func NewCommand() *cli.Command {
 	return &cli.Command{
-		Name:   "new",
-		Usage:  "gomu new greeter",
-		Action: Run,
+		Name:  "new",
+		Usage: "Create a new Go Micro project",
+		Subcommands: []*cli.Command{
+			{
+				Name:   "function",
+				Usage:  "Create a new Go Micro function project",
+				Action: Function,
+			},
+			{
+				Name:   "service",
+				Usage:  "Create a new Go Micro service project",
+				Action: Service,
+			},
+		},
 	}
 }
 
-func Run(ctx *cli.Context) error {
-	service := ctx.Args().First()
-	if len(service) == 0 {
-		fmt.Println("must provide a service name")
-		return nil
-	}
-
-	if path.IsAbs(service) {
-		fmt.Println("must provide a relative path as service name")
-		return nil
-	}
-
-	if _, err := os.Stat(service); !os.IsNotExist(err) {
-		return fmt.Errorf("%s already exists", service)
-	}
-
-	fmt.Printf("creating service %s\n", service)
-
-	files := []file{
-		{".gitignore", tmpl.GitIgnore},
-		{"Dockerfile", tmpl.Dockerfile},
-		{"Makefile", tmpl.Makefile},
-		{"go.mod", tmpl.Module},
-		{"handler/" + service + ".go", tmpl.Handler},
-		{"main.go", tmpl.Main},
-		{"proto/" + service + ".proto", tmpl.Proto},
-	}
-	c := config{
-		Alias:    service,
-		Comments: protoComments(service),
-		Dir:      service,
-	}
-
+func create(files []file, c config) error {
 	for _, file := range files {
-		fp := filepath.Join(service, file.Path)
+		fp := filepath.Join(c.Alias, file.Path)
 		dir := filepath.Dir(fp)
 
 		if _, err := os.Stat(dir); os.IsNotExist(err) {
@@ -115,4 +94,76 @@ func Run(ctx *cli.Context) error {
 	}
 
 	return nil
+}
+
+func Function(ctx *cli.Context) error {
+	function := ctx.Args().First()
+	if len(function) == 0 {
+		fmt.Println("must provide a function name")
+		return nil
+	}
+
+	if path.IsAbs(function) {
+		fmt.Println("must provide a relative path as function name")
+		return nil
+	}
+
+	if _, err := os.Stat(function); !os.IsNotExist(err) {
+		return fmt.Errorf("%s already exists", function)
+	}
+
+	fmt.Printf("creating function %s\n", function)
+
+	files := []file{
+		{".gitignore", tmpl.GitIgnore},
+		{"Dockerfile", tmpl.Dockerfile},
+		{"Makefile", tmpl.Makefile},
+		{"go.mod", tmpl.Module},
+		{"handler/" + function + ".go", tmpl.HandlerFNC},
+		{"main.go", tmpl.MainFNC},
+		{"proto/" + function + ".proto", tmpl.ProtoFNC},
+	}
+	c := config{
+		Alias:    function,
+		Comments: protoComments(function),
+		Dir:      function,
+	}
+
+	return create(files, c)
+}
+
+func Service(ctx *cli.Context) error {
+	service := ctx.Args().First()
+	if len(service) == 0 {
+		fmt.Println("must provide a service name")
+		return nil
+	}
+
+	if path.IsAbs(service) {
+		fmt.Println("must provide a relative path as service name")
+		return nil
+	}
+
+	if _, err := os.Stat(service); !os.IsNotExist(err) {
+		return fmt.Errorf("%s already exists", service)
+	}
+
+	fmt.Printf("creating service %s\n", service)
+
+	files := []file{
+		{".gitignore", tmpl.GitIgnore},
+		{"Dockerfile", tmpl.Dockerfile},
+		{"Makefile", tmpl.Makefile},
+		{"go.mod", tmpl.Module},
+		{"handler/" + service + ".go", tmpl.HandlerSRV},
+		{"main.go", tmpl.MainSRV},
+		{"proto/" + service + ".proto", tmpl.ProtoFNC},
+	}
+	c := config{
+		Alias:    service,
+		Comments: protoComments(service),
+		Dir:      service,
+	}
+
+	return create(files, c)
 }

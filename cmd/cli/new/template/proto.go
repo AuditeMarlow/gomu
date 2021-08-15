@@ -1,6 +1,25 @@
 package template
 
-var Proto = `syntax = "proto3";
+var ProtoFNC = `syntax = "proto3";
+
+package {{.Alias}};
+
+option go_package = "./proto;{{.Alias}}";
+
+service {{title .Alias}} {
+	rpc Call(Request) returns (Response) {}
+}
+
+message Request {
+	string name = 1;
+}
+
+message Response {
+	string msg = 1;
+}
+`
+
+var ProtoSRV = `syntax = "proto3";
 
 package {{.Alias}};
 

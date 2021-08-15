@@ -12,10 +12,10 @@ Installation is done by using the `go get` command.
 go get github.com/auditemarlow/gomu
 ```
 
-Let's create a new project using the `new` command.
+Let's create a new service using the `new` command.
 
 ```sh
-gomu new helloworld
+gomu new service helloworld
 ```
 
 Follow the on-screen instructions. Next, we can run the program.
