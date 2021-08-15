@@ -155,7 +155,7 @@ func Service(ctx *cli.Context) error {
 		{"go.mod", tmpl.Module},
 		{"handler/" + service + ".go", tmpl.HandlerSRV},
 		{"main.go", tmpl.MainSRV},
-		{"proto/" + service + ".proto", tmpl.ProtoFNC},
+		{"proto/" + service + ".proto", tmpl.ProtoSRV},
 	}
 	c := config{
 		Alias:    service,
