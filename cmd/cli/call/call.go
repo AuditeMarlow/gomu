@@ -11,16 +11,20 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
-func NewCommand() *cli.Command {
+func NewCommand(alias string) *cli.Command {
 	return &cli.Command{
 		Name:   "call",
-		Usage:  "gomu call greeter Say.Hello '{\"name\": \"John\"}'",
+		Usage:  "Call a service, e.g. " + alias + " call greeter Say.Hello '{\"name\": \"John\"}'",
 		Action: Run,
 	}
 }
 
 func Run(ctx *cli.Context) error {
 	args := ctx.Args().Slice()
+	if len(args) < 2 {
+		return cli.ShowSubcommandHelp(ctx)
+	}
+
 	service := args[0]
 	endpoint := args[1]
 

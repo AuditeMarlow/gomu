@@ -37,25 +37,6 @@ func protoComments(alias string) []string {
 	}
 }
 
-func NewCommand() *cli.Command {
-	return &cli.Command{
-		Name:  "new",
-		Usage: "Create a new Go Micro project",
-		Subcommands: []*cli.Command{
-			{
-				Name:   "function",
-				Usage:  "Create a new Go Micro function project",
-				Action: Function,
-			},
-			{
-				Name:   "service",
-				Usage:  "Create a new Go Micro service project",
-				Action: Service,
-			},
-		},
-	}
-}
-
 func create(files []file, c config) error {
 	for _, file := range files {
 		fp := filepath.Join(c.Alias, file.Path)
@@ -96,11 +77,29 @@ func create(files []file, c config) error {
 	return nil
 }
 
+func NewCommand(alias string) *cli.Command {
+	return &cli.Command{
+		Name:  "new",
+		Usage: "Create a project template",
+		Subcommands: []*cli.Command{
+			{
+				Name:   "function",
+				Usage:  "Create a function template, e.g. " + alias + " new function greeter",
+				Action: Function,
+			},
+			{
+				Name:   "service",
+				Usage:  "Create a service template, e.g. " + alias + " new service greeter",
+				Action: Service,
+			},
+		},
+	}
+}
+
 func Function(ctx *cli.Context) error {
 	function := ctx.Args().First()
 	if len(function) == 0 {
-		fmt.Println("must provide a function name")
-		return nil
+		return cli.ShowSubcommandHelp(ctx)
 	}
 
 	if path.IsAbs(function) {
@@ -135,8 +134,7 @@ func Function(ctx *cli.Context) error {
 func Service(ctx *cli.Context) error {
 	service := ctx.Args().First()
 	if len(service) == 0 {
-		fmt.Println("must provide a service name")
-		return nil
+		return cli.ShowSubcommandHelp(ctx)
 	}
 
 	if path.IsAbs(service) {

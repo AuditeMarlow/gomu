@@ -7,10 +7,14 @@ import (
 	"github.com/auditemarlow/gomu/cmd/cli/stream"
 )
 
+var (
+	alias string = cmd.DefaultCmd.App().Name
+)
+
 func init() {
 	cmd.Register(
-		call.NewCommand(),
-		new.NewCommand(),
-		stream.NewCommand(),
+		call.NewCommand(alias),
+		new.NewCommand(alias),
+		stream.NewCommand(alias),
 	)
 }

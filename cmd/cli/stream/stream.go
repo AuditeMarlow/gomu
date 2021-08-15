@@ -11,16 +11,20 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
-func NewCommand() *cli.Command {
+func NewCommand(alias string) *cli.Command {
 	return &cli.Command{
 		Name:   "stream",
-		Usage:  "gomu stream greeter Say.HelloStream '{\"name\": \"John\"}'",
+		Usage:  "Create a service stream, e.g. " + alias + " stream greeter Say.HelloStream '{\"name\": \"John\"}'",
 		Action: Run,
 	}
 }
 
 func Run(ctx *cli.Context) error {
 	args := ctx.Args().Slice()
+	if len(args) < 2 {
+		return cli.ShowSubcommandHelp(ctx)
+	}
+
 	service := args[0]
 	endpoint := args[1]
 
