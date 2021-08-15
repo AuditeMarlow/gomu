@@ -37,6 +37,14 @@ func protoComments(alias string) []string {
 	}
 }
 
+func NewCommand() *cli.Command {
+	return &cli.Command{
+		Name:   "new",
+		Usage:  "gomu new greeter",
+		Action: Run,
+	}
+}
+
 func Run(ctx *cli.Context) error {
 	service := ctx.Args().First()
 	if len(service) == 0 {

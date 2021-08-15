@@ -11,6 +11,14 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
+func NewCommand() *cli.Command {
+	return &cli.Command{
+		Name:   "call",
+		Usage:  "gomu call greeter Say.Hello '{\"name\": \"John\"}'",
+		Action: Run,
+	}
+}
+
 func Run(ctx *cli.Context) error {
 	args := ctx.Args().Slice()
 	service := args[0]
