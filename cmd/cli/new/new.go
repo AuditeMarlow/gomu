@@ -54,6 +54,9 @@ func create(files []file, c config) error {
 		}
 
 		fn := template.FuncMap{
+			"dehyphen": func(s string) string {
+				return strings.ReplaceAll(s, "-", "")
+			},
 			"lower": strings.ToLower,
 			"title": func(s string) string {
 				return strings.ReplaceAll(strings.Title(s), "-", "")

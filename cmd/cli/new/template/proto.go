@@ -2,9 +2,9 @@ package template
 
 var ProtoFNC = `syntax = "proto3";
 
-package {{.Alias}};
+package {{dehyphen .Alias}};
 
-option go_package = "./proto;{{.Alias}}";
+option go_package = "./proto;{{dehyphen .Alias}}";
 
 service {{title .Alias}} {
 	rpc Call(Request) returns (Response) {}
@@ -21,9 +21,9 @@ message Response {
 
 var ProtoSRV = `syntax = "proto3";
 
-package {{.Alias}};
+package {{dehyphen .Alias}};
 
-option go_package = "./proto;{{.Alias}}";
+option go_package = "./proto;{{dehyphen .Alias}}";
 
 service {{title .Alias}} {
 	rpc Call(Request) returns (Response) {}
