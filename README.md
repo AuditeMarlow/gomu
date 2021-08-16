@@ -9,7 +9,7 @@ Gomu is a helper tool for developing [Go Micro][1] projects.
 Installation is done by using the `go get` command.
 
 ```sh
-go get github.com/auditemarlow/gomu
+go install github.com/auditemarlow/gomu@latest
 ```
 
 Let's create a new service using the `new` command.
