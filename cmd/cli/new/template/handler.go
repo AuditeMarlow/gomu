@@ -12,7 +12,7 @@ import (
 
 type {{title .Alias}} struct{}
 
-func (e *{{title .Alias}}) Call(ctx context.Context, req *pb.Request, rsp *pb.Response) error {
+func (e *{{title .Alias}}) Call(ctx context.Context, req *pb.CallRequest, rsp *pb.CallResponse) error {
 	log.Infof("Received {{title .Alias}}.Call request: %v", req)
 	rsp.Msg = "Hello " + req.Name
 	return nil
@@ -23,6 +23,7 @@ var HandlerSRV = `package handler
 
 import (
 	"context"
+	"io"
 	"time"
 
 	log "github.com/asim/go-micro/v3/logger"
@@ -32,17 +33,17 @@ import (
 
 type {{title .Alias}} struct{}
 
-func (e *{{title .Alias}}) Call(ctx context.Context, req *pb.Request, rsp *pb.Response) error {
+func (e *{{title .Alias}}) Call(ctx context.Context, req *pb.CallRequest, rsp *pb.CallResponse) error {
 	log.Infof("Received {{title .Alias}}.Call request: %v", req)
 	rsp.Msg = "Hello " + req.Name
 	return nil
 }
 
-func (e *{{title .Alias}}) Stream(ctx context.Context, req *pb.StreamRequest, stream pb.{{title .Alias}}_StreamStream) error {
-	log.Infof("Received {{title .Alias}}.Stream request: %v", req)
+func (e *{{title .Alias}}) ServerStream(ctx context.Context, req *pb.ServerStreamRequest, stream pb.{{title .Alias}}_ServerStreamStream) error {
+	log.Infof("Received {{title .Alias}}.ServerStream request: %v", req)
 	for i := 0; i < int(req.Count); i++ {
 		log.Infof("Sending %d", i)
-		if err := stream.Send(&pb.StreamResponse{
+		if err := stream.Send(&pb.ServerStreamResponse{
 			Count: int64(i),
 		}); err != nil {
 			return err
@@ -50,5 +51,21 @@ func (e *{{title .Alias}}) Stream(ctx context.Context, req *pb.StreamRequest, st
 		time.Sleep(time.Millisecond * 250)
 	}
 	return nil
+}
+
+func (e *{{title .Alias}}) BidiStream(ctx context.Context, stream pb.{{title .Alias}}_BidiStreamStream) error {
+	for {
+		req, err := stream.Recv()
+		if err == io.EOF {
+			return nil
+		}
+		if err != nil {
+			return err
+		}
+		log.Infof("Got ping %v", req.Stroke)
+		if err := stream.Send(&pb.BidiStreamResponse{Stroke: req.Stroke}); err != nil {
+			return err
+		}
+	}
 }
 `
