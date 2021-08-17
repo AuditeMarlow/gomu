@@ -103,6 +103,26 @@ cd helloworld
 make proto tidy
 ```
 
+## Running A Service
+
+To run a service, `cd` into its directory, generate the protobuf code, install
+its dependencies and run the program.
+
+```bash
+make proto tidy
+go run main.go
+```
+
+### With Docker
+
+To run a service with Docker, `cd` into its directory, generate the protobuf
+code, build the Docker image and run the Docker container.
+
+```bash
+make proto docker
+docker run helloworld:latest
+```
+
 ## Calling A Service
 
 To call a service, use the `gomu call` command. This will send a single request
