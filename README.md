@@ -45,7 +45,7 @@ You will need protoc-gen-micro for code generation
 ```bash
 # Download latest proto release
 # https://github.com/protocolbuffers/protobuf/releases
-go get -u github.com/golang/protobuf/protoc
+go get -u github.com/golang/protobuf/proto
 go get -u github.com/golang/protobuf/protoc-gen-go
 go get github.com/asim/go-micro/cmd/protoc-gen-micro/v3
 ```
@@ -64,7 +64,7 @@ visit https://github.com/protocolbuffers/protobuf/releases/latest
 
 download protobuf for go-micro:
 
-go get -u github.com/golang/protobuf/protoc
+go get -u github.com/golang/protobuf/proto
 go get -u github.com/golang/protobuf/protoc-gen-go
 go get github.com/asim/go-micro/cmd/protoc-gen-micro/v3
 
@@ -87,7 +87,7 @@ visit https://github.com/protocolbuffers/protobuf/releases/latest
 
 download protobuf for go-micro:
 
-go get -u github.com/golang/protobuf/protoc
+go get -u github.com/golang/protobuf/proto
 go get -u github.com/golang/protobuf/protoc-gen-go
 go get github.com/asim/go-micro/cmd/protoc-gen-micro/v3
 

@@ -28,7 +28,7 @@ func protoComments(alias string) []string {
 		"\ndownload protoc zip packages (protoc-$VERSION-$PLATFORM.zip) and install:\n",
 		"visit https://github.com/protocolbuffers/protobuf/releases/latest",
 		"\ndownload protobuf for go-micro:\n",
-		"go get -u github.com/golang/protobuf/protoc",
+		"go get -u github.com/golang/protobuf/proto",
 		"go get -u github.com/golang/protobuf/protoc-gen-go",
 		"go get github.com/asim/go-micro/cmd/protoc-gen-micro/v3",
 		"\ncompile the proto file " + alias + ".proto:\n",
