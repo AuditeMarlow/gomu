@@ -39,6 +39,22 @@ func (e *{{title .Alias}}) Call(ctx context.Context, req *pb.CallRequest, rsp *p
 	return nil
 }
 
+func (e *{{title .Alias}}) ClientStream(ctx context.Context, stream pb.{{title .Alias}}_ClientStreamStream) error {
+	var count int64
+	for {
+		req, err := stream.Recv()
+		if err == io.EOF {
+			log.Infof("Got %v pings total", count)
+			return stream.SendMsg(&pb.ClientStreamResponse{Count: count})
+		}
+		if err != nil {
+			return err
+		}
+		log.Infof("Got ping %v", req.Stroke)
+		count++
+	}
+}
+
 func (e *{{title .Alias}}) ServerStream(ctx context.Context, req *pb.ServerStreamRequest, stream pb.{{title .Alias}}_ServerStreamStream) error {
 	log.Infof("Received {{title .Alias}}.ServerStream request: %v", req)
 	for i := 0; i < int(req.Count); i++ {

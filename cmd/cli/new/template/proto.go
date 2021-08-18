@@ -27,6 +27,7 @@ option go_package = "./proto;{{dehyphen .Alias}}";
 
 service {{title .Alias}} {
 	rpc Call(CallRequest) returns (CallResponse) {}
+	rpc ClientStream(stream ClientStreamRequest) returns (ClientStreamResponse) {}
 	rpc ServerStream(ServerStreamRequest) returns (stream ServerStreamResponse) {}
 	rpc BidiStream(stream BidiStreamRequest) returns (stream BidiStreamResponse) {}
 }
@@ -37,6 +38,14 @@ message CallRequest {
 
 message CallResponse {
 	string msg = 1;
+}
+
+message ClientStreamRequest {
+	int64 stroke = 1;
+}
+
+message ClientStreamResponse {
+	int64 count = 1;
 }
 
 message ServerStreamRequest {
