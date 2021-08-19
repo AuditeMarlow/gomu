@@ -4,9 +4,9 @@ var Makefile = `GOPATH:=$(shell go env GOPATH)
 
 .PHONY: init
 init:
-	go get -u github.com/golang/protobuf/proto
-	go get -u github.com/golang/protobuf/protoc-gen-go
-	go get github.com/asim/go-micro/cmd/protoc-gen-micro/v3
+	go get -u google.golang.org/protobuf/proto
+	go install github.com/golang/protobuf/protoc-gen-go@latest
+	go install github.com/asim/go-micro/cmd/protoc-gen-micro/v3@latest
 
 .PHONY: proto
 proto:
