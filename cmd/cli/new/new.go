@@ -12,6 +12,13 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
+var flags []cli.Flag = []cli.Flag{
+	&cli.BoolFlag{
+		Name:  "skaffold",
+		Usage: "generate skaffold files",
+	},
+}
+
 type config struct {
 	Alias    string
 	Comments []string
@@ -89,11 +96,13 @@ func NewCommand(alias string) *cli.Command {
 				Name:   "function",
 				Usage:  "Create a function template, e.g. " + alias + " new function greeter",
 				Action: Function,
+				Flags:  flags,
 			},
 			{
 				Name:   "service",
 				Usage:  "Create a service template, e.g. " + alias + " new service greeter",
 				Action: Service,
+				Flags:  flags,
 			},
 		},
 	}
@@ -125,6 +134,13 @@ func Function(ctx *cli.Context) error {
 		{"main.go", tmpl.MainFNC},
 		{"proto/" + function + ".proto", tmpl.ProtoFNC},
 	}
+	if ctx.Bool("skaffold") {
+		files = append(files, []file{
+			{"skaffold.yaml", tmpl.SkaffoldCFG},
+			{"skaffold/deployment.yaml", tmpl.SkaffoldDEP},
+		}...)
+	}
+
 	c := config{
 		Alias:    function,
 		Comments: protoComments(function),
@@ -160,6 +176,13 @@ func Service(ctx *cli.Context) error {
 		{"main.go", tmpl.MainSRV},
 		{"proto/" + service + ".proto", tmpl.ProtoSRV},
 	}
+	if ctx.Bool("skaffold") {
+		files = append(files, []file{
+			{"skaffold.yaml", tmpl.SkaffoldCFG},
+			{"skaffold/deployment.yaml", tmpl.SkaffoldDEP},
+		}...)
+	}
+
 	c := config{
 		Alias:    service,
 		Comments: protoComments(service),
