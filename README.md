@@ -22,7 +22,8 @@ Follow the on-screen instructions. Next, we can run the program.
 
 ```bash
 cd example
-go run main.go
+make proto tidy
+gomu run
 ```
 
 Finally we can call the service.
@@ -125,21 +126,32 @@ make proto tidy
 ## Running A Service
 
 To run a service, `cd` into its directory, generate the protobuf code, install
-its dependencies and run the program.
+its dependencies and run the program using the `gomu run` command to build and
+run your service continuously.
+
+To run a service, use the `gomu run` command to build and run your service
+continuously.
 
 ```bash
-make proto tidy
-go run main.go
+$ gomu run
+2021-08-20 14:05:54  file=v3@v3.5.2/service.go:199 level=info Starting [service] helloworld
+2021-08-20 14:05:54  file=server/rpc_server.go:820 level=info Transport [http] Listening on [::]:34531
+2021-08-20 14:05:54  file=server/rpc_server.go:840 level=info Broker [http] Connected to 127.0.0.1:44975
+2021-08-20 14:05:54  file=server/rpc_server.go:654 level=info Registry [mdns] Registering node: helloworld-45f43a6f-5fc0-4b0d-af73-e4a10c36ef54
 ```
 
 ### With Docker
 
-To run a service with Docker, `cd` into its directory, generate the protobuf
-code, build the Docker image and run the Docker container.
+To run a service with Docker, generate the protobuf code, build the Docker
+image and run the Docker container.
 
 ```bash
-make proto docker
-docker run helloworld:latest
+$ make docker
+$ docker run helloworld:latest
+2021-08-20 12:07:31  file=v3@v3.5.2/service.go:199 level=info Starting [service] helloworld
+2021-08-20 12:07:31  file=server/rpc_server.go:820 level=info Transport [http] Listening on [::]:36037
+2021-08-20 12:07:31  file=server/rpc_server.go:840 level=info Broker [http] Connected to 127.0.0.1:46157
+2021-08-20 12:07:31  file=server/rpc_server.go:654 level=info Registry [mdns] Registering node: helloworld-31f58714-72f5-4d12-b2eb-98f66aea7a34
 ```
 
 ## Calling A Service
