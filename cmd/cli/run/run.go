@@ -13,7 +13,7 @@ import (
 func NewCommand(alias string) *cli.Command {
 	return &cli.Command{
 		Name:   "run",
-		Usage:  "Run a service",
+		Usage:  "Build and run a service continuously",
 		Action: Run,
 	}
 }
