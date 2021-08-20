@@ -16,6 +16,12 @@ func NewCommand(alias string) *cli.Command {
 				Action:  Bidirectional,
 			},
 			{
+				Name:    "client",
+				Aliases: []string{"c"},
+				Usage:   "Create a client service stream, e.g. " + alias + " stream client helloworld Helloworld.ClientStream '{\"stroke\": 1}' '{\"stroke\": 2}'",
+				Action:  Client,
+			},
+			{
 				Name:    "server",
 				Aliases: []string{"s"},
 				Usage:   "Create a server service stream, e.g. " + alias + " stream server helloworld Helloworld.ServerStream '{\"count\": 10}'",
