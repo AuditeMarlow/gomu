@@ -125,10 +125,6 @@ make proto tidy
 
 ## Running A Service
 
-To run a service, `cd` into its directory, generate the protobuf code, install
-its dependencies and run the program using the `gomu run` command to build and
-run your service continuously.
-
 To run a service, use the `gomu run` command to build and run your service
 continuously.
 
@@ -142,8 +138,8 @@ $ gomu run
 
 ### With Docker
 
-To run a service with Docker, generate the protobuf code, build the Docker
-image and run the Docker container.
+To run a service with Docker, build the Docker image and run the Docker
+container.
 
 ```bash
 $ make docker
