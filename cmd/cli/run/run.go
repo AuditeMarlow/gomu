@@ -5,6 +5,7 @@ import (
 	"os"
 	"os/signal"
 	"path/filepath"
+	"time"
 
 	"github.com/fsnotify/fsnotify"
 	"github.com/urfave/cli/v2"
@@ -40,6 +41,7 @@ func Run(ctx *cli.Context) error {
 			service.Wait()
 			fmt.Println("Service has stopped, restarting service")
 			service.Start()
+			time.Sleep(time.Second)
 		}
 	}()
 
