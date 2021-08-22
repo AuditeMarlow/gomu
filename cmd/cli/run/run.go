@@ -61,6 +61,12 @@ func Run(ctx *cli.Context) error {
 				if event.Op&fsnotify.Write == fsnotify.Write {
 					service.Stop()
 				}
+				if event.Op&fsnotify.Create == fsnotify.Create {
+					watcher.Add(event.Name)
+				}
+				if event.Op&fsnotify.Remove == fsnotify.Remove {
+					watcher.Remove(event.Name)
+				}
 			case err, ok := <-watcher.Errors:
 				if !ok {
 					return
