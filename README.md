@@ -98,9 +98,35 @@ cd helloworld
 make proto tidy
 ```
 
+### Jaeger
+
+To create a new service with [Jaeger][7] files, pass the `--jaeger` flag to the
+`gomu new service` or `gomu new function` commands. You may configure the
+Jeager client using [environment variables][8].
+
+```bash
+$ gomu new service --jaeger helloworld
+creating function helloworld
+
+download protoc zip packages (protoc-$VERSION-$PLATFORM.zip) and install:
+
+visit https://github.com/protocolbuffers/protobuf/releases/latest
+
+download protobuf for go-micro:
+
+go get -u google.golang.org/protobuf/proto
+go install github.com/golang/protobuf/protoc-gen-go@latest
+go install github.com/asim/go-micro/cmd/protoc-gen-micro/v3@latest
+
+compile the proto file helloworld.proto:
+
+cd helloworld
+make proto tidy
+```
+
 ### Skaffold
 
-To create a new service with [Skaffold][7] files, pass the `--skaffold` flag to
+To create a new service with [Skaffold][9] files, pass the `--skaffold` flag to
 the `gomu new service` or `gomu new function` commands.
 
 ```bash
@@ -189,7 +215,7 @@ $ gomu stream bidi helloworld Helloworld.BidiStream '{"stroke": 1}' '{"stroke": 
 
 ## License
 
-This software is published under the [MIT license][8].
+This software is published under the [MIT license][10].
 
 [1]: https://github.com/asim/go-micro
 [2]: https://golang.org/dl/
@@ -197,5 +223,7 @@ This software is published under the [MIT license][8].
 [4]: https://grpc.io/docs/protoc-installation/
 [5]: https://micro.mu/github.com/golang/protobuf/protoc-gen-go
 [6]: https://github.com/asim/go-micro/tree/master/cmd/protoc-gen-micro
-[7]: https://skaffold.dev/
-[8]: LICENSE
+[7]: https://www.jaegertracing.io/
+[8]: https://github.com/jaegertracing/jaeger-client-go#environment-variables
+[9]: https://skaffold.dev/
+[10]: LICENSE
