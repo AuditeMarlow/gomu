@@ -47,8 +47,8 @@ You will need protoc-gen-micro for code generation
 # Download latest proto release
 # https://github.com/protocolbuffers/protobuf/releases
 go get -u github.com/golang/protobuf/proto
-go get -u github.com/golang/protobuf/protoc-gen-go
-go get github.com/asim/go-micro/cmd/protoc-gen-micro/v3
+go install github.com/golang/protobuf/protoc-gen-go@latest
+go install github.com/asim/go-micro/cmd/protoc-gen-micro/v3@latest
 ```
 
 ## Creating A Service
