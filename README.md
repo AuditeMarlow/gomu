@@ -140,7 +140,7 @@ import (
     "context"
     "fmt"
 
-    "helloworld/debug/trace"
+    "github.com/auditemarlow/gomu/debug/trace"
 )
 
 func Greet(ctx context.Context, name string) string {
