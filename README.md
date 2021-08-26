@@ -106,22 +106,48 @@ Jaeger client using [environment variables][8].
 
 ```bash
 $ gomu new service --jaeger helloworld
-creating function helloworld
+```
 
-download protoc zip packages (protoc-$VERSION-$PLATFORM.zip) and install:
+You may invoke `trace.NewSpan(context.Context).Finish()` to nest spans.
+Example:
 
-visit https://github.com/protocolbuffers/protobuf/releases/latest
+`handler/helloworld.go`
+```go
+package helloworld
 
-download protobuf for go-micro:
+import (
+    "context"
 
-go get -u google.golang.org/protobuf/proto
-go install github.com/golang/protobuf/protoc-gen-go@latest
-go install github.com/asim/go-micro/cmd/protoc-gen-micro/v3@latest
+    log "github.com/asim/go-micro/v3/logger"
 
-compile the proto file helloworld.proto:
+    "helloworld/greeter"
+    proto "helloworld/proto"
+)
 
-cd helloworld
-make proto tidy
+type Helloworld struct{}
+
+func (e *Helloworld) Call(ctx context.Context, req pb.CallRequest, rsp *pb.CallResponse) error {
+    log.Infof("Received Helloworld.Call request: %v", req)
+    rsp.Msg = greeter.Greet(ctx, req.Name)
+    return nil
+}
+```
+
+`greeter/greeter.go`
+```go
+package greeter
+
+import (
+    "context"
+    "fmt"
+
+    "helloworld/debug/trace"
+)
+
+func Greet(ctx context.Context, name string) string {
+    defer trace.NewSpan(ctx).Finish()
+    return fmt.Sprint("Hello " + name)
+}
 ```
 
 ### Skaffold
@@ -131,22 +157,6 @@ the `gomu new service` or `gomu new function` commands.
 
 ```bash
 $ gomu new service --skaffold helloworld
-creating function helloworld
-
-download protoc zip packages (protoc-$VERSION-$PLATFORM.zip) and install:
-
-visit https://github.com/protocolbuffers/protobuf/releases/latest
-
-download protobuf for go-micro:
-
-go get -u google.golang.org/protobuf/proto
-go install github.com/golang/protobuf/protoc-gen-go@latest
-go install github.com/asim/go-micro/cmd/protoc-gen-micro/v3@latest
-
-compile the proto file helloworld.proto:
-
-cd helloworld
-make proto tidy
 ```
 
 ## Running A Service
@@ -174,6 +184,15 @@ $ docker run helloworld:latest
 2021-08-20 12:07:31  file=server/rpc_server.go:820 level=info Transport [http] Listening on [::]:36037
 2021-08-20 12:07:31  file=server/rpc_server.go:840 level=info Broker [http] Connected to 127.0.0.1:46157
 2021-08-20 12:07:31  file=server/rpc_server.go:654 level=info Registry [mdns] Registering node: helloworld-31f58714-72f5-4d12-b2eb-98f66aea7a34
+```
+
+### With Skaffold
+
+When you've created your service using the `--skaffold` flag, you may run the
+Skaffold pipeline using the `skaffold` command.
+
+```bash
+$ skaffold dev
 ```
 
 ## Calling A Service
