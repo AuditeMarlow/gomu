@@ -3,18 +3,40 @@ package template
 var MainFNC = `package main
 
 import (
-	"github.com/asim/go-micro/v3"
-	log "github.com/asim/go-micro/v3/logger"
+{{if .Jaeger }}	"{{.Dir}}/debug/trace/jaeger"
+{{end}}	"{{.Dir}}/handler"
 
-	"{{.Dir}}/handler"
+{{if .Jaeger }}	ot "github.com/asim/go-micro/plugins/wrapper/trace/opentracing/v3"
+{{end}}	"github.com/asim/go-micro/v3"
+	log "github.com/asim/go-micro/v3/logger"
+)
+
+var (
+	service = "{{lower .Alias}}"
+	version = "latest"
 )
 
 func main() {
-	// Create function
-	fnc := micro.NewFunction(
-		micro.Name("{{lower .Alias}}"),
-		micro.Version("latest"),
+{{if .Jaeger}}	// Create tracer
+	tracer, closer, err := jaeger.NewTracer(
+		jaeger.Name(service),
+		jaeger.FromEnv(true),
+		jaeger.GlobalTracer(true),
 	)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer closer.Close()
+
+{{end}}	// Create function
+	fnc := micro.NewFunction(
+		micro.Name(service),
+		micro.Version(version),
+{{if .Jaeger}}		micro.WrapCall(ot.NewCallWrapper(tracer)),
+		micro.WrapClient(ot.NewClientWrapper(tracer)),
+		micro.WrapHandler(ot.NewHandlerWrapper(tracer)),
+		micro.WrapSubscriber(ot.NewSubscriberWrapper(tracer)),
+{{end}}	)
 	fnc.Init()
 
 	// Handle function
@@ -30,19 +52,41 @@ func main() {
 var MainSRV = `package main
 
 import (
-	"github.com/asim/go-micro/v3"
-	log "github.com/asim/go-micro/v3/logger"
-
-	"{{.Dir}}/handler"
+{{if .Jaeger }}	"{{.Dir}}/debug/trace/jaeger"
+{{end}}	"{{.Dir}}/handler"
 	pb "{{.Dir}}/proto"
+
+{{if .Jaeger }}	ot "github.com/asim/go-micro/plugins/wrapper/trace/opentracing/v3"
+{{end}}	"github.com/asim/go-micro/v3"
+	log "github.com/asim/go-micro/v3/logger"
+)
+
+var (
+	service = "{{lower .Alias}}"
+	version = "latest"
 )
 
 func main() {
-	// Create service
-	srv := micro.NewService(
-		micro.Name("{{lower .Alias}}"),
-		micro.Version("latest"),
+{{if .Jaeger}}	// Create tracer
+	tracer, closer, err := jaeger.NewTracer(
+		jaeger.Name(service),
+		jaeger.FromEnv(true),
+		jaeger.GlobalTracer(true),
 	)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer closer.Close()
+
+{{end}}	// Create service
+	srv := micro.NewService(
+		micro.Name(service),
+		micro.Version(version),
+{{if .Jaeger}}		micro.WrapCall(ot.NewCallWrapper(tracer)),
+		micro.WrapClient(ot.NewClientWrapper(tracer)),
+		micro.WrapHandler(ot.NewHandlerWrapper(tracer)),
+		micro.WrapSubscriber(ot.NewSubscriberWrapper(tracer)),
+{{end}}	)
 	srv.Init()
 
 	// Register handler

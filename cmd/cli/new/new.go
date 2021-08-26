@@ -14,6 +14,10 @@ import (
 
 var flags []cli.Flag = []cli.Flag{
 	&cli.BoolFlag{
+		Name:  "jaeger",
+		Usage: "generate jaeger tracer files",
+	},
+	&cli.BoolFlag{
 		Name:  "skaffold",
 		Usage: "generate skaffold files",
 	},
@@ -23,6 +27,7 @@ type config struct {
 	Alias    string
 	Comments []string
 	Dir      string
+	Jaeger   bool
 }
 
 type file struct {
@@ -134,6 +139,13 @@ func Function(ctx *cli.Context) error {
 		{"main.go", tmpl.MainFNC},
 		{"proto/" + function + ".proto", tmpl.ProtoFNC},
 	}
+	if ctx.Bool("jaeger") {
+		files = append(files, []file{
+			{"debug/trace/trace.go", tmpl.Trace},
+			{"debug/trace/jaeger/jeager.go", tmpl.Jaeger},
+			{"debug/trace/jaeger/options.go", tmpl.JaegerOptions},
+		}...)
+	}
 	if ctx.Bool("skaffold") {
 		files = append(files, []file{
 			{"skaffold.yaml", tmpl.SkaffoldCFG},
@@ -145,6 +157,7 @@ func Function(ctx *cli.Context) error {
 		Alias:    function,
 		Comments: protoComments(function),
 		Dir:      function,
+		Jaeger:   ctx.Bool("jaeger"),
 	}
 
 	return create(files, c)
@@ -176,6 +189,13 @@ func Service(ctx *cli.Context) error {
 		{"main.go", tmpl.MainSRV},
 		{"proto/" + service + ".proto", tmpl.ProtoSRV},
 	}
+	if ctx.Bool("jaeger") {
+		files = append(files, []file{
+			{"debug/trace/trace.go", tmpl.Trace},
+			{"debug/trace/jaeger/jeager.go", tmpl.Jaeger},
+			{"debug/trace/jaeger/options.go", tmpl.JaegerOptions},
+		}...)
+	}
 	if ctx.Bool("skaffold") {
 		files = append(files, []file{
 			{"skaffold.yaml", tmpl.SkaffoldCFG},
@@ -187,6 +207,7 @@ func Service(ctx *cli.Context) error {
 		Alias:    service,
 		Comments: protoComments(service),
 		Dir:      service,
+		Jaeger:   ctx.Bool("jaeger"),
 	}
 
 	return create(files, c)
