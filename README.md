@@ -21,7 +21,7 @@ gomu new service helloworld
 Follow the on-screen instructions. Next, we can run the program.
 
 ```bash
-cd example
+cd helloworld
 make proto tidy
 gomu run
 ```
