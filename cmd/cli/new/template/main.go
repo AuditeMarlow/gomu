@@ -3,12 +3,13 @@ package template
 var MainFNC = `package main
 
 import (
-{{if .Jaeger }}	"{{.Dir}}/debug/trace/jaeger"
-{{end}}	"{{.Dir}}/handler"
+	"{{.Dir}}/handler"
 
 {{if .Jaeger }}	ot "github.com/asim/go-micro/plugins/wrapper/trace/opentracing/v3"
 {{end}}	"github.com/asim/go-micro/v3"
-	log "github.com/asim/go-micro/v3/logger"
+	log "github.com/asim/go-micro/v3/logger"{{if .Jaeger }}
+
+	"github.com/auditemarlow/gomu/debug/trace/jaeger"{{end}}
 )
 
 var (
@@ -52,13 +53,14 @@ func main() {
 var MainSRV = `package main
 
 import (
-{{if .Jaeger }}	"{{.Dir}}/debug/trace/jaeger"
-{{end}}	"{{.Dir}}/handler"
+	"{{.Dir}}/handler"
 	pb "{{.Dir}}/proto"
 
 {{if .Jaeger }}	ot "github.com/asim/go-micro/plugins/wrapper/trace/opentracing/v3"
 {{end}}	"github.com/asim/go-micro/v3"
-	log "github.com/asim/go-micro/v3/logger"
+	log "github.com/asim/go-micro/v3/logger"{{if .Jaeger }}
+
+	"github.com/auditemarlow/gomu/debug/trace/jaeger"{{end}}
 )
 
 var (

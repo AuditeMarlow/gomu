@@ -139,13 +139,6 @@ func Function(ctx *cli.Context) error {
 		{"main.go", tmpl.MainFNC},
 		{"proto/" + function + ".proto", tmpl.ProtoFNC},
 	}
-	if ctx.Bool("jaeger") {
-		files = append(files, []file{
-			{"debug/trace/trace.go", tmpl.Trace},
-			{"debug/trace/jaeger/jaeger.go", tmpl.Jaeger},
-			{"debug/trace/jaeger/options.go", tmpl.JaegerOptions},
-		}...)
-	}
 	if ctx.Bool("skaffold") {
 		files = append(files, []file{
 			{"skaffold.yaml", tmpl.SkaffoldCFG},
@@ -188,13 +181,6 @@ func Service(ctx *cli.Context) error {
 		{"handler/" + service + ".go", tmpl.HandlerSRV},
 		{"main.go", tmpl.MainSRV},
 		{"proto/" + service + ".proto", tmpl.ProtoSRV},
-	}
-	if ctx.Bool("jaeger") {
-		files = append(files, []file{
-			{"debug/trace/trace.go", tmpl.Trace},
-			{"debug/trace/jaeger/jaeger.go", tmpl.Jaeger},
-			{"debug/trace/jaeger/options.go", tmpl.JaegerOptions},
-		}...)
 	}
 	if ctx.Bool("skaffold") {
 		files = append(files, []file{
