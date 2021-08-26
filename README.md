@@ -109,7 +109,6 @@ $ gomu new service --jaeger helloworld
 ```
 
 You may invoke `trace.NewSpan(context.Context).Finish()` to nest spans.
-Example:
 
 `handler/helloworld.go`
 ```go
