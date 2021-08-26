@@ -102,7 +102,7 @@ make proto tidy
 
 To create a new service with [Jaeger][7] files, pass the `--jaeger` flag to the
 `gomu new service` or `gomu new function` commands. You may configure the
-Jeager client using [environment variables][8].
+Jaeger client using [environment variables][8].
 
 ```bash
 $ gomu new service --jaeger helloworld
