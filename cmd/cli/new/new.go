@@ -142,7 +142,7 @@ func Function(ctx *cli.Context) error {
 	if ctx.Bool("jaeger") {
 		files = append(files, []file{
 			{"debug/trace/trace.go", tmpl.Trace},
-			{"debug/trace/jaeger/jeager.go", tmpl.Jaeger},
+			{"debug/trace/jaeger/jaeger.go", tmpl.Jaeger},
 			{"debug/trace/jaeger/options.go", tmpl.JaegerOptions},
 		}...)
 	}
@@ -192,7 +192,7 @@ func Service(ctx *cli.Context) error {
 	if ctx.Bool("jaeger") {
 		files = append(files, []file{
 			{"debug/trace/trace.go", tmpl.Trace},
-			{"debug/trace/jaeger/jeager.go", tmpl.Jaeger},
+			{"debug/trace/jaeger/jaeger.go", tmpl.Jaeger},
 			{"debug/trace/jaeger/options.go", tmpl.JaegerOptions},
 		}...)
 	}
