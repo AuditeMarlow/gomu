@@ -10,4 +10,5 @@ require (
 	github.com/uber/jaeger-client-go v2.29.1+incompatible
 	github.com/uber/jaeger-lib v2.4.1+incompatible
 	github.com/urfave/cli/v2 v2.3.0
+	gopkg.in/yaml.v2 v2.4.0
 )
