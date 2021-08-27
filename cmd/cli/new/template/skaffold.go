@@ -12,7 +12,7 @@ build:
 deploy:
   kubectl:
     manifests:
-    - skaffold/*.yaml
+    - resources/*.yaml
 `
 
 var SkaffoldDEP = `---
@@ -36,6 +36,4 @@ spec:
       containers:
       - name: {{.Alias}}
         image: {{.Alias}}:latest
-        args:
-        - --server_name=go.micro.srv.{{lower .Alias}}
 `

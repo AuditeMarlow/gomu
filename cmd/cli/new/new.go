@@ -142,7 +142,7 @@ func Function(ctx *cli.Context) error {
 	if ctx.Bool("skaffold") {
 		files = append(files, []file{
 			{"skaffold.yaml", tmpl.SkaffoldCFG},
-			{"skaffold/deployment.yaml", tmpl.SkaffoldDEP},
+			{"resources/deployment.yaml", tmpl.SkaffoldDEP},
 		}...)
 	}
 
@@ -185,7 +185,7 @@ func Service(ctx *cli.Context) error {
 	if ctx.Bool("skaffold") {
 		files = append(files, []file{
 			{"skaffold.yaml", tmpl.SkaffoldCFG},
-			{"skaffold/deployment.yaml", tmpl.SkaffoldDEP},
+			{"resources/deployment.yaml", tmpl.SkaffoldDEP},
 		}...)
 	}
 
