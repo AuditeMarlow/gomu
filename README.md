@@ -197,6 +197,93 @@ Skaffold pipeline using the `skaffold` command.
 skaffold dev
 ```
 
+## Describing A Service
+
+To describe a service, use the `gomu describe service` command.
+
+```bash
+$ gomu describe service helloworld
+{
+  "name": "helloworld",
+  "version": "latest",
+  "metadata": null,
+  "endpoints": [
+    {
+      "name": "Helloworld.Call",
+      "request": {
+        "name": "CallRequest",
+        "type": "CallRequest",
+        "values": [
+          {
+            "name": "name",
+            "type": "string",
+            "values": null
+          }
+        ]
+      },
+      "response": {
+        "name": "CallResponse",
+        "type": "CallResponse",
+        "values": [
+          {
+            "name": "msg",
+            "type": "string",
+            "values": null
+          }
+        ]
+      }
+    }
+  ],
+  "nodes": [
+    {
+      "id": "helloworld-9660f06a-d608-43d9-9f44-e264ff63c554",
+      "address": "172.26.165.161:45059",
+      "metadata": {
+        "broker": "http",
+        "protocol": "mucp",
+        "registry": "mdns",
+        "server": "mucp",
+        "transport": "http"
+      }
+    }
+  ]
+}
+```
+
+You may pass the `--format=yaml` flag to output a YAML formatted object.
+
+```bash
+$ gomu describe service --format=yaml helloworld
+name: helloworld
+version: latest
+metadata: {}
+endpoints:
+- name: Helloworld.Call
+  request:
+    name: CallRequest
+    type: CallRequest
+    values:
+    - name: name
+      type: string
+      values: []
+  response:
+    name: CallResponse
+    type: CallResponse
+    values:
+    - name: msg
+      type: string
+      values: []
+nodes:
+- id: helloworld-9660f06a-d608-43d9-9f44-e264ff63c554
+  address: 172.26.165.161:45059
+  metadata:
+    broker: http
+    protocol: mucp
+    registry: mdns
+    server: mucp
+    transport: http
+```
+
 ## Calling A Service
 
 To call a service, use the `gomu call` command. This will send a single request
