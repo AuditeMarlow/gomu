@@ -105,12 +105,14 @@ to the `gomu new service` or `gomu new function` commands. You may configure
 the Jaeger client using [environment variables][8].
 
 ```bash
-$ gomu new service --jaeger helloworld
+gomu new service --jaeger helloworld
 ```
 
-You may invoke `trace.NewSpan(context.Context).Finish()` to nest spans.
+You may invoke `trace.NewSpan(context.Context).Finish()` to nest spans. For
+example, consider the following handler implementing a greeter.
 
 `handler/helloworld.go`
+
 ```go
 package helloworld
 
@@ -133,6 +135,7 @@ func (e *Helloworld) Call(ctx context.Context, req pb.CallRequest, rsp *pb.CallR
 ```
 
 `greeter/greeter.go`
+
 ```go
 package greeter
 
@@ -155,7 +158,7 @@ To create a new service with [Skaffold][9] files, pass the `--skaffold` flag to
 the `gomu new service` or `gomu new function` commands.
 
 ```bash
-$ gomu new service --skaffold helloworld
+gomu new service --skaffold helloworld
 ```
 
 ## Running A Service
@@ -191,7 +194,7 @@ When you've created your service using the `--skaffold` flag, you may run the
 Skaffold pipeline using the `skaffold` command.
 
 ```bash
-$ skaffold dev
+skaffold dev
 ```
 
 ## Calling A Service
