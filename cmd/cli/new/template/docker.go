@@ -13,3 +13,9 @@ COPY --from=builder /go/src/{{.Alias}}/{{.Alias}} /{{.Alias}}
 ENTRYPOINT ["/{{.Alias}}"]
 CMD []
 `
+
+var DockerIgnore = `.gitignore
+Dockerfile{{if .Skaffold}}
+resources/
+skaffold.yaml{{end}}
+`

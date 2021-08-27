@@ -28,6 +28,7 @@ type config struct {
 	Comments []string
 	Dir      string
 	Jaeger   bool
+	Skaffold bool
 }
 
 type file struct {
@@ -174,6 +175,7 @@ func Service(ctx *cli.Context) error {
 	fmt.Printf("creating service %s\n", service)
 
 	files := []file{
+		{".dockerignore", tmpl.DockerIgnore},
 		{".gitignore", tmpl.GitIgnore},
 		{"Dockerfile", tmpl.Dockerfile},
 		{"Makefile", tmpl.Makefile},
@@ -194,6 +196,7 @@ func Service(ctx *cli.Context) error {
 		Comments: protoComments(service),
 		Dir:      service,
 		Jaeger:   ctx.Bool("jaeger"),
+		Skaffold: ctx.Bool("skaffold"),
 	}
 
 	return create(files, c)
