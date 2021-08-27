@@ -49,13 +49,16 @@ func Bidirectional(ctx *cli.Context) error {
 		if err != nil {
 			return err
 		}
+
 		b, err := json.Marshal(rsp)
 		if err != nil {
 			return err
 		}
 		fmt.Println(string(b))
 	}
-
+	if stream.Error() != nil {
+		return stream.Error()
+	}
 	if err := stream.Close(); err != nil {
 		return err
 	}

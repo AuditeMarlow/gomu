@@ -29,7 +29,6 @@ func Server(ctx *cli.Context) error {
 	d.UseNumber()
 
 	var creq map[string]interface{}
-
 	if err := d.Decode(&creq); err != nil {
 		return err
 	}
@@ -48,6 +47,7 @@ func Server(ctx *cli.Context) error {
 	if err := stream.Send(creq); err != nil {
 		return err
 	}
+
 	for stream.Error() == nil {
 		rsp := &map[string]interface{}{}
 		err := stream.Recv(rsp)
@@ -64,7 +64,7 @@ func Server(ctx *cli.Context) error {
 		fmt.Println(string(b))
 	}
 	if stream.Error() != nil {
-		return err
+		return stream.Error()
 	}
 	if err := stream.Close(); err != nil {
 		return err

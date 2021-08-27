@@ -27,16 +27,6 @@ func Run(ctx *cli.Context) error {
 
 	service := args[0]
 	endpoint := args[1]
-
-	if len(service) == 0 {
-		fmt.Println("must provide a service name")
-		return nil
-	}
-	if len(endpoint) == 0 {
-		fmt.Println("must provide an endpoint")
-		return nil
-	}
-
 	req := strings.Join(args[2:], " ")
 	if len(req) == 0 {
 		req = `{}`
@@ -46,7 +36,6 @@ func Run(ctx *cli.Context) error {
 	d.UseNumber()
 
 	var creq map[string]interface{}
-
 	if err := d.Decode(&creq); err != nil {
 		return err
 	}

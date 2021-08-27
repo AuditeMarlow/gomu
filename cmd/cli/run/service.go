@@ -6,6 +6,12 @@ import (
 	"syscall"
 )
 
+type Service interface {
+	Start() error
+	Stop() error
+	Wait() error
+}
+
 type service struct {
 	cmd     *exec.Cmd
 	running bool

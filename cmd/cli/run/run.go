@@ -21,7 +21,6 @@ func NewCommand(alias string) *cli.Command {
 
 func Run(ctx *cli.Context) error {
 	service := newService()
-
 	if err := service.Start(); err != nil {
 		return err
 	}

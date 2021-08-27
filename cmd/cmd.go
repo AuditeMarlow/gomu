@@ -31,7 +31,7 @@ var (
 	description string = "A go-micro helper tool"
 )
 
-func New() Cmd {
+func New() *command {
 	c := &command{}
 	c.app = cli.NewApp()
 	c.app.Name = name
