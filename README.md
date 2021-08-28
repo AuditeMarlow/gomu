@@ -197,6 +197,15 @@ Skaffold pipeline using the `skaffold` command.
 skaffold dev
 ```
 
+## Listing Services
+
+To list services, use the `gomu services` command.
+
+```bash
+$ gomu services
+helloworld
+```
+
 ## Describing A Service
 
 To describe a service, use the `gomu describe service` command.
