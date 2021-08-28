@@ -2,6 +2,7 @@ package services
 
 import (
 	"fmt"
+	"sort"
 
 	"github.com/asim/go-micro/v3"
 	"github.com/urfave/cli/v2"
@@ -21,8 +22,14 @@ func Run(ctx *cli.Context) error {
 		return err
 	}
 
+	var services []string
 	for _, srv := range srvs {
-		fmt.Println(srv.Name)
+		services = append(services, srv.Name)
+	}
+
+	sort.Strings(services)
+	for _, srv := range services {
+		fmt.Println(srv)
 	}
 
 	return nil
