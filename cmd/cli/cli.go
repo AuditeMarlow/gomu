@@ -6,6 +6,7 @@ import (
 	"github.com/auditemarlow/gomu/cmd/cli/describe"
 	"github.com/auditemarlow/gomu/cmd/cli/new"
 	"github.com/auditemarlow/gomu/cmd/cli/run"
+	"github.com/auditemarlow/gomu/cmd/cli/services"
 	"github.com/auditemarlow/gomu/cmd/cli/stream"
 )
 
@@ -19,6 +20,7 @@ func init() {
 		describe.NewCommand(alias),
 		new.NewCommand(alias),
 		run.NewCommand(alias),
+		services.NewCommand(alias),
 		stream.NewCommand(alias),
 	)
 }
