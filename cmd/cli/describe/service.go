@@ -18,12 +18,15 @@ func Service(ctx *cli.Context) error {
 		return cli.ShowSubcommandHelp(ctx)
 	}
 
-	services, err := micro.NewService().Options().Registry.GetService(args[0])
+	srvs, err := micro.NewService().Options().Registry.GetService(args[0])
 	if err != nil {
 		return err
 	}
+	if len(srvs) == 0 {
+		return fmt.Errorf("service %s not found", args[0])
+	}
 
-	for _, srv := range services {
+	for _, srv := range srvs {
 		var b []byte
 		var err error
 		if ctx.String("format") == "json" {
