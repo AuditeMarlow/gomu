@@ -2,6 +2,11 @@
 
 Gomu is a helper tool for developing [Go Micro][1] projects.
 
+## Notice
+
+This project has been migrated to [Go Micro][1] and superseded by its version
+of [Gomu][11]. Changes or updates will no longer happen here.
+
 ## Getting Started
 
 [Download][2] and install **Go**. Version `1.16` or higher is required
@@ -344,3 +349,4 @@ This software is published under the [MIT license][10].
 [8]: https://github.com/jaegertracing/jaeger-client-go#environment-variables
 [9]: https://skaffold.dev/
 [10]: LICENSE
+[11]: https://github.com/asim/go-micro/tree/master/cmd/gomu
